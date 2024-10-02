@@ -1,0 +1,108 @@
+const ask = require("readline-sync")
+
+let nomesDosDoadores = []
+
+function main() {
+    let sustentaMenu = true
+    while (sustentaMenu) {
+        console.clear()
+        console.log(`
+            [1] - Cadastrar Doador                   
+            [2] - Listar Doadores                    
+            [3] - Buscar Doador Por Tipo Sanguineo
+            [4] - Buscar Doador Por Data Da ultima Doacao
+            [5] - Sair
+            Escolha uma opcao: `)
+
+        let op = Number(ask.question())
+
+        switch (op) {
+            case 1:
+                console.clear()
+                cadastroDeDoadores()
+                break
+            case 2:
+                console.clear()
+                listaDeDoadores()
+                break
+            case 3:
+                console.clear()
+                buscarPorTipoSanguineo()
+                break
+            case 4:
+                console.log()
+                buscaPorData()
+                break
+            case 5:
+                sustentaMenu = false
+                break
+            default:
+                console.log("Opcao invalida. Tente novamente.")
+                break
+        }
+    }
+}
+
+
+function cadastroDeDoadores() {
+    console.clear()
+    let nome = ask.question('Digite seu nome: ')
+    let idade = Number(ask.question("Qual sua idade? "))
+    let peso = Number(ask.question("Qual seu peso? "))
+    let tipoSanguineo = ask.question("Qual seu tipo sanguineo? ")
+    
+
+    let novoDoador = {
+        nome: nome,
+        idade: idade,
+        peso: peso,
+        tipoSanguineo: tipoSanguineo,
+        ultimaDoacao: {
+            dia: Number(ask.question("Digite o dia da ultima ? ")),
+            mes: Number(ask.question("Digite o mes da ultima ? ")),
+            ano: Number(ask.question("Digite o ano da ultima ? "))
+        }
+    }
+
+    nomesDosDoadores.push(novoDoador)
+    console.clear()
+    ask.question('Doador cadastrado. Tecle enter para continuar...')
+}
+
+function listaDeDoadores() {
+    console.log(`
+            ----------------------------------------------------------------------------------------------
+             Nome      |    Idade      |     Peso      |     Tipo Sanguineo     |     Ultima Doacao 
+            ----------------------------------------------------------------------------------------------`)
+
+    for (let doador of nomesDosDoadores) {
+        console.log(` ${doador.nome}   |  ${doador.idade}  |     ${doador.peso}      |    ${doador.tipoSanguineo}     |   ${doador.ultimaDoacao}`)
+    }
+
+    console.log("----------------------------------------------------------------------------------------------")
+    ask.question('Tecle enter para continuar...')
+}
+
+function buscaPorData() {
+    let dataBuscada = {
+        dia: Number(ask.question('Digite o dia:  ')),
+            mes: Number(ask.question('Digite o mes:  ')),
+                ano: Number(ask.question('Digite o ano:  '))
+    }
+
+for (let doador of nomesDosDoadores) {
+    mostrarDoador = false
+    if (DecoratorHandler.ultimaDoacao.ano < dataBuscada.ano) {
+        mostrarDoador = true
+    } else if (doador.ultimaDoacao.ano === dataBuscada.ano && doador.ultimaDoacao.mes < dataBustacada.mes) {
+        mostrarDoador = true
+    } else if (doador.ultimaDoacao.ano === dataBuscada.ano && doador.ultimaDoacao.mes === dataBuscada.mes && doador.ultimaDoacao.dia < dataBuscada.dia) {
+        mostrarDoador = true
+    }
+
+    if(mostrarDoador){
+        console.log(` ${doador.nome}   |  ${doador.idade}  |     ${doador.peso}      |    ${doador.tipoSanguineo}   `)
+    }
+}
+}
+main()
